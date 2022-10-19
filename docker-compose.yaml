@@ -1,15 +1,12 @@
 ---
 version: "3"
 services:
-  database:
+  mariadb:
     image: mariadb:10.4
     environment:
-      MARIADB_ROOT_HOST: mariadb
-      MARIADB_ROOT_USER: delpiero
       MARIADB_ROOT_PASSWORD: juve
-      MARIADB_ROOT_DB: exo3
     volumes: 
-    - mariadb:/data 
+    - /mariadb_data:/var/lib/mysql 
 
   flask-app:
     build: .
@@ -17,11 +14,5 @@ services:
     ports:
     - 5000:5000
     depends_on:
-    - database 
+    - mariadb 
     restart: always
-    volumes:
-    - "./public:/app/public" 
-
-volumes:
-  mariadb: {}
-  
